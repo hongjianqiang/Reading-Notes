@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>单例模式</title>
+</head>
+<body>
+  <script>
+    (function() {
+      'use strict';
+
+      var element = {
+        allElements: [],
+        get: function(id) {
+          var elem = document.getElementById(id);
+
+          this.allElements.push(elem);
+
+          return elem;
+        },
+        create: function(type) {
+          var elem = document.createElement(type);
+
+          this.allElements.push(elem);
+
+          return elem;
+        },
+        getAllElements: function() {
+          return this.allElements;
+        }
+      };
+
+      window.element = element;
+    })();
+  </script>
+  <script>
+    (function() {
+      'use strict';
+
+      var header, input, allElements;
+
+      header = element.get('header');
+      input = element.create('input');
+      allElements = element.getAllElements();
+
+      console.log(allElements.length);
+    })();
+  </script>
+</body>
+</html>

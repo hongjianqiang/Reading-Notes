@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>使用自执行函数的单例模式</title>
+</head>
+<body>
+  <script>
+    (function() {
+      'use strict';
+
+      var myCookie = (function() {
+        var allCookies = document.cookie.split(';'),
+            cookies = {},
+            cookiesIndex = 0,
+            cookiesLength = allCookies.length,
+            cookie;
+
+        for (; cookiesIndex < cookiesLength; cookiesIndex++) {
+          cookie = allCookies[cookiesIndex].split('=');
+
+          cookies[unescape(cookie[0])] = unescape(cookie[1]);
+        }
+
+        return {
+          get: function(name) {
+            return cookies[name] || '';
+          },
+          set: function(name, value) {
+            cookies[name] = value;
+            document.cookie = escape(name) + '=' + escape(value);
+          }
+        };
+      })();
+
+      window.myCookie = myCookie;
+    })();
+  </script>
+  <script>
+    (function() {
+      'use strict';
+
+      myCookie.set('姓名', '洪建强');
+      myCookie.set('年龄', '18');
+      myCookie.set('职业', 'JavaScript程序员');
+
+      console.log(myCookie.get('姓名'));
+    })();
+  </script>
+</body>
+</html>

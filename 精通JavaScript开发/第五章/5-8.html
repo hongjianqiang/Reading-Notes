@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>使用 ECMAScript 5 实现原型模式</title>
+</head>
+<body>
+  <script>
+    (function() {
+      'use strict';
+
+      var field = {
+        type: '',
+        displayText: '',
+        getElement: function() {
+          var field = document.createElement('input');
+
+          field.setAttribute('type', this.type);
+          field.setAttribute('placeholder', this.displayText);
+
+          return field;
+        }
+      };
+
+      window.field = field;
+    })();
+  </script>
+  <script>
+    (function() {
+      'use strict';
+
+      var textField, emailField;
+
+      textField = Object.create(field, {
+        'type': {
+          value: 'text',
+          enumerable: true
+        },
+        'displayText': {
+          value: '输入您的住址',
+          enumerable: true
+        }
+      });
+
+      emailField = Object.create(field, {
+        'type': {
+          value: 'email',
+          enumerable: true
+        },
+        'displayText': {
+          value: '输入您的E-mail地址',
+          enumerable: true
+        }
+      });
+
+      window.addEventListener('load', function() {
+        var bodyElement = document.body;
+
+        bodyElement.appendChild(textField.getElement());
+        bodyElement.appendChild(emailField.getElement());
+      }, false);
+    })();
+  </script>
+</body>
+</html>
