@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>3.4.5 获取元素</title>
+</head>
+<body>
+  <h1>你想买什么？</h1>
+  <p title="a gentle reminder">Don't forget to buy this stuff.</p>
+  <ul id="purchases">
+    <li>A tin of beans</li>
+    <li class="sale">Cheese</li>
+    <li class="sale important">Milk</li>
+  </ul>
+  <script>
+    // 1.getElementById
+    console.log( typeof(document.getElementById('purchases')) );
+
+
+    // 2.getElementsByTagName
+    var items = document.getElementsByTagName('li');
+    console.log(items.length);
+    for (var i = 0; i < items.length; i++) {
+      console.log( typeof(items[i]) );
+    }
+    // 获得文档总元素节点
+    var elements = document.getElementsByTagName('*');
+    console.log(elements.length);
+    for (var i = 0; i < elements.length; i++) {
+      console.log(elements[i].tagName.toLowerCase());
+    }
+    // id属性值是 purchases 的元素包含多少个列表项
+    var shopping = document.getElementById('purchases');
+    var items = shopping.getElementsByTagName('*');
+    console.log(items.length);
+
+
+    // 3.getElementsByClassName
+    var elements = document.getElementsByClassName('important sale');
+    for (var i = 0; i < elements.length; i++) {
+      console.log(elements[i].innerText);
+    }
+    // 兼容新老浏览器的getElementsByClassName函数
+    function getElementsByClassName(node, classname) {
+      if (node.getElementsByClassName) {
+        // 使用现有方法
+        return node.getElementsByClassName(classname);
+      } else {
+        var results = [];
+        var elems = node.getElementsByTagName('*');
+
+        for (var i = 0; i < elems.length; i++) {
+          if (elems[i].className.indexOf(classname) != -1) {
+            results[results.length] = elems[i];
+          }
+        }
+
+        return results;
+      }
+    }
+    var shopping = document.getElementById('purchases');
+    var sales = getElementsByClassName(shopping, 'sale');
+    console.log(sales.length);
+
+  </script>
+</body>
+</html>

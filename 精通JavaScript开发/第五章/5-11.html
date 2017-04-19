@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>使用单例模式实现命名空间的设置</title>
+</head>
+<body>
+  <script>
+    (function() {
+      'use strict';
+
+      var myProject = {
+        data: {
+          ajax: {
+            get: function(url, callback) {
+              var xhr = new XMLHttpRequest(),
+                  STATE_LOADED = 4,
+                  STATUS_OK = 200;
+
+              xhr.onreadystatechange = function() {
+                if (xhr.readyState !== STATE_LOADED) {
+                  return;
+                }
+
+                if (xhr.status === STATUS_OK) {
+                  callback(xhr.responseText);
+                }
+              };
+
+              xhr.open('GET', url);
+              xhr.send();
+            }
+          }
+        }
+      };
+
+      window.myProject = myProject;
+    })();
+  </script>
+  <script>
+    (function() {
+      'use strict';
+
+      myProject.data.cookies = {
+        get: function(name) {
+          var output = '',
+              escapedName = escape(name),
+              start = document.cookie.indexOf(escapedName + '='),
+              end = document.cookie.indexOf(';', start);
+
+          end = end === -1 ? (document.cookie.length - 1) : end;
+
+          if (start >= 0) {
+            output = document.cookie.substring(start + escapedName.length + 1, end);
+          }
+
+          return unescape(output);
+        },
+        set: function(name, value) {
+          document.cookie = escape(name) + '=' + escape(value);
+        }
+      };
+
+      myProject.data.ajax.get('/user/12345', function(response) {
+        alert('HTTP GET response received. User data: ' + response);
+      });
+
+      myProject.data.cookies.set('company', 'AKQA');
+      myProject.data.cookies.set('name', 'Den Odell');
+
+      alert(myProject.data.cookies.get('company'));
+      alert(myProject.data.cookies.get('name'));
+    })();
+  </script>
+</body>
+</html>
