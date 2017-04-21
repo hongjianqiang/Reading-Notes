@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>4.1-4.3 Image Gallery</title>
+  <meta name="keywords" content="childNodes, nodeType, nodeValue, firstChild, lastChild" />
+  <link rel="stylesheet" href="/styles/layout.css" media="screen" />
 </head>
 <body>
   <h1>Snapshots</h1>
@@ -25,20 +27,21 @@
     </li>
     <li>
       <a href="/images/rose.jpg" title="A red, red rose."
-        onmouseout="showPic(this);"
+        onmouseover="showPic(this);"
         onclick="showPic(this); return false;">
         Rose
       </a>
     </li>
     <li>
       <a href="/images/bigben.jpg" title="The famous clock."
-        onmouseout="showPic(this);"
+        onmouseover="showPic(this);"
         onclick="showPic(this); return false;">
         Big Ben
       </a>
     </li>
   </ul>
   <img id="placeholder" src="/images/placeholder.jpg" alt="my image gallery">
+  <p id="description">Choose an image.</p>
   <script type="text/javascript" src="/scripts/showPic.js"></script>
 </body>
 </html>
