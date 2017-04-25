@@ -24,4 +24,20 @@
   }
   window.onload = countBodyChildren;
 
+  $('ul').append(`
+    <li>
+      <a href="/images/mm.jpg"
+        title="A beauty girl."
+        onmouseover="showPic(this);"
+        onclick="showPic(this); return false;">
+        girl
+      </a>
+    </li>
+  `);
+
+  // 平稳退化
+  function popUp(winURL) {
+    window.open(winURL, 'popup', 'with=320, height=480');
+  }
+  window.popUp = popUp;
 })();
