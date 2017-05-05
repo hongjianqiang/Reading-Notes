@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Promise对象中then方法的参数</title>
+</head>
+<body>
+    <h1>Promise对象中的then方法，可以接收构造函数中处理的状态变化，并分别对应执行。then方法有2个参数，第一个函数接收resolved状态的执行，第二个参数接收reject状态的执行</h1>
+    <hr>
+    <h1>then方法的执行结果也会返回一个Promise对象。因此我们可以进行then的链式执行，这也是解决回调地狱的主要方式。</h1>
+    <script>
+        (function() {
+            'use strict';
+
+            function fn(num) {
+                return new Promise(function(resolve, reject) {
+                    if (typeof num == 'number') {
+                        resolve();
+                    } else {
+                        reject();
+                    }
+                }).then(function() {
+                    console.log('参数是一个number值');
+                }, function() {
+                    console.log('参数不是一个number值');
+                });
+            }
+
+            fn('hahaha');
+            fn(1234);
+        })();
+    </script>
+    <script>
+        (function() {
+            'use strict';
+
+            function fn(num) {
+                return new Promise(function(resolve, reject) {
+                    if (typeof num == 'number') {
+                        resolve(num);
+                    } else {
+                        reject(num);
+                    }
+                })
+                .then(function(num) {
+                    console.log(num + '参数是一个number值');
+                })
+                .then(null, function(num) {
+                    console.log(num + '参数不是一个number值');
+                });
+            }
+
+            fn('hahaha');
+            fn(1234);
+        })();
+    </script>
+</body>
+</html>
