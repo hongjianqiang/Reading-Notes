@@ -44,4 +44,6 @@
 
   window.onload = prepareGallery;
 
+  // window.name跨域测试
+  window.name = '这里是http://localhost:8082/gallery.html页面的数据';
 })();
