@@ -11,8 +11,16 @@
         this.put = function(key, value) {
             var position = loseloseHashCode(key);
 
-            table[position] = value;
-            console.log(position + ' - ' + key);
+            if (table[position] === undefined) {
+                table[position] = new ValuePair(key, value);
+            } else {
+                var index = ++position;
+
+                while (table[index] !== undefined) {
+                    index++;
+                }
+                table[index] = new ValuePair(key, value);
+            }
         };
 
         this.get = function(key) {
@@ -29,7 +37,16 @@
                     console.log(i + ': ' + table[i]);
                 }
             }
-        }
+        };
+
+        var ValuePair = function(key, value) {
+            this.key = key;
+            this.value = value;
+
+            this.toString = function() {
+                return '[' + this.key + ' - ' + this.value + ']';
+            };
+        };
     }
 
     var loseloseHashCode = function(key) {
