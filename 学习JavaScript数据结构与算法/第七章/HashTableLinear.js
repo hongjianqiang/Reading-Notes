@@ -24,11 +24,47 @@
         };
 
         this.get = function(key) {
-            return table[loseloseHashCode(key)];
+            var position = loseloseHashCode(key);
+
+            if (table[position] !== undefined) {
+                if (table[position] === key) {
+                    return table[position].value;
+                } else {
+                    var index = ++position;
+
+                    while(table[index] !== undefined && (table[index] && table[index].key !== key)) {
+                        index++;
+                    }
+
+                    if (table[index] && (table[index].key === key)) {
+                        return table[index].value;
+                    }
+                }
+            }
+
+            return undefined;
         };
 
         this.remove = function(key) {
-            table[loseloseHashCode(key)] = undefined;
+            var position = loseloseHashCode(key);
+
+            if (table[position] !== undefined) {
+                if (table[position] === key) {
+                    table[position] = undefined;
+                } else {
+                    var index = ++position;
+
+                    while(table[index] !== undefined && (table[index] && table[index].key !== key)) {
+                        index++;
+                    }
+
+                    if (table[index] && (table[index].key === key)) {
+                        table[index] = undefined;
+                    }
+                }
+            }
+
+            return undefined;
         };
 
         this.print = function() {
